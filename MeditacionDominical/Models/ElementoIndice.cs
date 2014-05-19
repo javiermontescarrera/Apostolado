@@ -31,7 +31,7 @@ namespace MeditacionDominical.Models
         }
 
         string texto = string.Empty;
-        public SortedDictionary<byte, ElementoIndice> Texto
+        public string Texto
         {
             get { return texto; }
             set
