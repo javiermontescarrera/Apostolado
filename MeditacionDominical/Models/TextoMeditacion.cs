@@ -19,13 +19,26 @@ namespace MeditacionDominical.Models
             }
         }
 
-        string textoLectura;
-        public string TextoLectura
+
+        // Por ejemplo: nombreMeditacion = "Domingo de la Semana 5ª de Pascua. Ciclo A"
+        string nombreMeditacion;
+        public string NombreMeditacion
         {
-            get { return textoLectura; }
+            get { return nombreMeditacion; }
             set
             {
-                textoLectura = value;
+                nombreMeditacion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        ContenidoLectura contenido;
+        public ContenidoLectura Contenido
+        {
+            get { return contenido; }
+            set
+            {
+                contenido = value;
                 OnPropertyChanged();
             }
         }
