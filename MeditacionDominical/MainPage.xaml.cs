@@ -8,6 +8,10 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MeditacionDominical.Resources;
+using System.Xml.Linq;
+using MeditacionDominical.Models;
+using System.ServiceModel.Syndication;
+using System.Xml;
 
 namespace MeditacionDominical
 {
@@ -18,24 +22,22 @@ namespace MeditacionDominical
         {
             InitializeComponent();
 
-            // Sample code to localize the ApplicationBar
-            //BuildLocalizedApplicationBar();
+            WebClient RSSClient = new WebClient();
+            RSSClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(RSSClient_DownloadStringCompleted);
+            RSSClient.DownloadStringAsync(new Uri("http://feeds.feedburner.com/MeditacionDominical"));
         }
 
-        // Sample code for building a localized ApplicationBar
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
-
-        //    // Create a new button and set the text value to the localized string from AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
-
-        //    // Create a new menu item with the localized string from AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
+        void RSSClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            var RSSData = from rss in XElement.Parse(e.Result).Descendants("item")
+                          select new Feed
+                          {
+                              Titulo = rss.Element("title").Value,
+                              FechaPublicacion = rss.Element("pubDate").Value,
+                              Link = rss.Element("link").Value,
+                              Contenido = rss.Element("description").Value
+                          };
+            RSSList.ItemsSource = RSSData;
+        }
     }
 }
