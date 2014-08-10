@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -11,6 +12,7 @@ using Windows.Phone.Speech.Recognition;
 using Windows.Phone.Speech.Synthesis;
 using MeditacionDominical.Resources;
 using MeditacionDominical.Models;
+//using HtmlAgilityPack;
 
 namespace MeditacionDominical.Views
 {
@@ -19,6 +21,7 @@ namespace MeditacionDominical.Views
         SpeechSynthesizer ss;
 
         private Common common = new Common();
+        String strTextoALeer;
 
         public Lector()
         {
@@ -26,14 +29,23 @@ namespace MeditacionDominical.Views
             try
             {
                 BuildLocalizedApplicationBar();
-                tblContenido.Html = common.LeerClave("feedItem");
-                // PronunciarTexto();
-
+                setearTamanioTexto();
+                tblTitulo.Text = common.LeerClave("Titulo");
+                strTextoALeer = tblNombreAplicacion.Text + "\n" + tblTitulo.Text + "\n" + common.LeerClave("ContenidoPlano");
+                wbContenido.NavigateToString(common.LeerClave("Contenido"));
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void setearTamanioTexto()
+        {
+            double ScreenWidth = Application.Current.Host.Content.ActualWidth;
+            double ScreenHeight = Application.Current.Host.Content.ActualHeight;
+            scrContenido.Height = ScreenHeight - 193;
+            wbContenido.Width = ScreenWidth - 50;
         }
 
         private void BuildLocalizedApplicationBar()
@@ -55,10 +67,7 @@ namespace MeditacionDominical.Views
 
         private async void PronunciarTexto()
         {
-            string texto = tblContenido.Html;
-            RssTextTrimmer Trimmer = new RssTextTrimmer();
-            texto = Trimmer.Convert(texto, null, null, null).ToString();
-            if (texto.Trim() != String.Empty)
+            if (strTextoALeer.Trim() != String.Empty)
             {
                 ss = new SpeechSynthesizer();
 
@@ -69,7 +78,7 @@ namespace MeditacionDominical.Views
                              select x).FirstOrDefault();
 
                 ss.SetVoice(voice);
-                ss.SpeakTextAsync(texto);
+                ss.SpeakTextAsync(strTextoALeer);
             }
         }
 

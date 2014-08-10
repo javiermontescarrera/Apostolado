@@ -2,14 +2,11 @@
   <Deployment.Parts>
     <AssemblyPart x:Name="MeditacionDominical" Source="MeditacionDominical.dll" />
     <AssemblyPart x:Name="HtmlAgilityPack" Source="HtmlAgilityPack.dll" />
-    <AssemblyPart x:Name="Krempel.WP7.Core" Source="Krempel.WP7.Core.dll" />
-    <AssemblyPart x:Name="Microsoft.Phone.Controls.Toolkit" Source="Microsoft.Phone.Controls.Toolkit.dll" />
     <AssemblyPart x:Name="System.Net.Http" Source="System.Net.Http.dll" />
     <AssemblyPart x:Name="System.Net.Http.Extensions" Source="System.Net.Http.Extensions.dll" />
     <AssemblyPart x:Name="System.Net.Http.Primitives" Source="System.Net.Http.Primitives.dll" />
     <AssemblyPart x:Name="System.ServiceModel.Syndication" Source="System.ServiceModel.Syndication.dll" />
     <AssemblyPart x:Name="System.Xml.XPath" Source="System.Xml.XPath.dll" />
-    <AssemblyPart x:Name="Microsoft.Phone.Controls" Source="Microsoft.Phone.Controls.dll" />
     <AssemblyPart Source="es-PE/MeditacionDominical.resources.dll" />
   </Deployment.Parts>
 </Deployment>

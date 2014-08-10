@@ -60,9 +60,6 @@ D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\zh-Hant\System.Serv
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Debug\Views\Lector.g.cs
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Debug\Views\Config.g.cs
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\HtmlAgilityPack.dll
-D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Krempel.WP7.Core.dll
-D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Microsoft.Phone.Controls.Toolkit.dll
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\System.Xml.XPath.dll
-D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Microsoft.Phone.Controls.dll
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\HtmlAgilityPack.pdb
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\HtmlAgilityPack.xml

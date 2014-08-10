@@ -22,7 +22,6 @@ namespace MeditacionDominical.Views
     {
 
         private Common common = new Common();
-        //SyndicationItem feedItem = (App.Current.Resources["feedItem"] as SyndicationItem);
         Uri uriLector = new Uri("/Views/Lector.xaml", UriKind.Relative);
 
         public Visor()
@@ -40,6 +39,15 @@ namespace MeditacionDominical.Views
             }
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (RSSList.SelectedItems.Count > 0)
+            {
+                //RSSList.SelectedItems.Clear();
+            }
+        }
+
+
         void CargarFeeds()
         {
             WebClient RSSClient = new WebClient();
@@ -54,20 +62,31 @@ namespace MeditacionDominical.Views
             XmlReader reader = XmlReader.Create(new StringReader(xml));
             try 
             {
-                //var RSSData = from rss in XElement.Parse(xml).Descendants("entry")
-                //              select new System.ServiceModel.Syndication.SyndicationItem
-                //              {
-                //                  Title = new TextSyndicationContent(rss.Element("title").Value),
-                //                  PublishDate = DateTime.ParseExact(rss.Element("published").Value.ToString(), "yyyy-MM-ddTHH:mm:ss.ffK", null),
-                //                  //Link = rss.Element("link/href").Value,
-                //                  Content = new TextSyndicationContent(rss.Element("content").Value)
-                //              };
-
-                //RSSList.ItemsSource = RSSData;
-
-
                 SyndicationFeed feed = SyndicationFeed.Load(reader);
-                RSSList.ItemsSource = feed.Items.ToList();
+                
+                List<SyndicationItem> listaFeeds = feed.Items.ToList();
+                List<Models.Feed> RSSData = new List<Models.Feed>();
+                foreach (SyndicationItem si in listaFeeds)
+                {
+                    Models.Feed oFeed = new Models.Feed();
+                    oFeed.Id = si.Id;
+                    oFeed.Titulo = si.Title.Text;
+                    oFeed.FechaPublicacion = si.PublishDate.ToString("dd/MM/yyyy");
+                    oFeed.ContenidoHtml = "<html><body>" + common.RetornarContenidoFeed(si.Content) + "</body></html>";
+                    
+                    foreach (SyndicationLink sl in feed.Items.ToList()[0].Links)
+                    {
+                        if (sl.RelationshipType == "alternate")
+                        {
+                            oFeed.Link = sl.Uri.ToString();
+                        }
+                    }
+
+                    RSSData.Add(oFeed);
+                }
+
+                RSSList.ItemsSource = RSSData;
+
             }
             catch (Exception ex)
             {
@@ -105,20 +124,13 @@ namespace MeditacionDominical.Views
 
         private void RSSList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SyndicationItem feedItem = (SyndicationItem) e.AddedItems[0];
-            MemoryStream ms = new MemoryStream();
-            XmlWriterSettings ws = new XmlWriterSettings
-            {
-                Indent = true,
-                IndentChars = " ",
-                OmitXmlDeclaration = true,
-                Encoding = new UTF8Encoding(false),
-            };
-            XmlWriter w = XmlWriter.Create(ms, ws);
-            feedItem.Content.WriteTo(w,"Content", "");
-            w.Flush();
-            common.GuardarClave("feedItem", Encoding.UTF8.GetString(ms.ToArray(), 0, ms.ToArray().Length));
+            Models.Feed feedItem = (Models.Feed)e.AddedItems[0];
+            common.GuardarClave("Titulo", feedItem.Titulo);
+            common.GuardarClave("Contenido", feedItem.ContenidoHtml);
+            common.GuardarClave("ContenidoPlano", feedItem.ContenidoPlano);
+            common.GuardarClave("link", feedItem.Link.ToString());
             NavigationService.Navigate(uriLector);
         }
+
     }
 }
