@@ -39,7 +39,7 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <!--<phone:LongListSelector Name="RSSList" ItemTemplate="{Binding RssDataTemplate}" SelectionChanged="RSSList_SelectionChanged" />-->
-            <ListBox Name="RSSList" SelectionChanged="RSSList_SelectionChanged">
+            <ListBox Name="RSSList" SelectionChanged="RSSList_SelectionChanged" SelectionMode="Single">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>

@@ -15,6 +15,8 @@ using System.ServiceModel.Syndication;
 using System.IO;
 using MeditacionDominical.Models;
 using System.Text;
+using System.IO.IsolatedStorage;
+using Microsoft.Phone.Net.NetworkInformation;
 
 namespace MeditacionDominical.Views
 {
@@ -31,12 +33,26 @@ namespace MeditacionDominical.Views
             try
             {
                 BuildLocalizedApplicationBar();
-                CargarFeeds();
+                if (verificarConexion())
+                {
+                    CargarFeeds();
+                }
+                else
+                {
+                    RSSList.ItemsSource = leerFeeds();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private bool verificarConexion()
+        {
+            bool Rpta = NetworkInterface.GetIsNetworkAvailable();
+
+            return Rpta;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -53,45 +69,162 @@ namespace MeditacionDominical.Views
             WebClient RSSClient = new WebClient();
             RSSClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(RSSClient_DownloadStringCompleted);
             //RSSClient.DownloadStringAsync(new Uri("http://feeds.feedburner.com/MeditacionDominical"));
-            RSSClient.DownloadStringAsync(new Uri("http://meditaciondominical.blogspot.com/feeds/posts/default?max-results=10"));
+            RSSClient.DownloadStringAsync(new Uri("http://meditaciondominical.blogspot.com/feeds/posts/default?max-results=4"));
         }
 
         void RSSClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {           
-            string xml = e.Result;
-            XmlReader reader = XmlReader.Create(new StringReader(xml));
-            try 
+        {
+            try
             {
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
-                
-                List<SyndicationItem> listaFeeds = feed.Items.ToList();
-                List<Models.Feed> RSSData = new List<Models.Feed>();
-                foreach (SyndicationItem si in listaFeeds)
+                string xml = e.Result;
+                XmlReader reader = XmlReader.Create(new StringReader(xml));
+                try
                 {
-                    Models.Feed oFeed = new Models.Feed();
-                    oFeed.Id = si.Id;
-                    oFeed.Titulo = si.Title.Text;
-                    oFeed.FechaPublicacion = si.PublishDate.ToString("dd/MM/yyyy");
-                    oFeed.ContenidoHtml = "<html><body>" + common.RetornarContenidoFeed(si.Content) + "</body></html>";
-                    
-                    foreach (SyndicationLink sl in feed.Items.ToList()[0].Links)
+                    SyndicationFeed feed = SyndicationFeed.Load(reader);
+
+                    List<SyndicationItem> listaFeeds = feed.Items.ToList();
+                    List<Models.Feed> RSSData = new List<Models.Feed>();
+                    foreach (SyndicationItem si in listaFeeds)
                     {
-                        if (sl.RelationshipType == "alternate")
+                        Models.Feed oFeed = new Models.Feed();
+                        oFeed.Id = si.Id;
+                        oFeed.Titulo = si.Title.Text;
+                        oFeed.FechaPublicacion = si.PublishDate.ToString("dd/MM/yyyy");
+                        oFeed.ContenidoHtml = "<html><body>" + common.RetornarContenidoFeed(si.Content) + "</body></html>";
+
+                        foreach (SyndicationLink sl in feed.Items.ToList()[0].Links)
                         {
-                            oFeed.Link = sl.Uri.ToString();
+                            if (sl.RelationshipType == "alternate")
+                            {
+                                oFeed.Link = sl.Uri.ToString();
+                            }
                         }
+
+                        RSSData.Add(oFeed);
                     }
 
-                    RSSData.Add(oFeed);
+                    RSSList.ItemsSource = RSSData;
+                    grabarFeeds(RSSData);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            catch (System.Reflection.TargetInvocationException tiEx)
+            {
+                RSSList.ItemsSource = leerFeeds();
+            }
+        }
+
+        private void grabarFeeds(List<Models.Feed> RSSData)
+        {
+            
+            for (int i = 1; i <= 10; i++)
+            {
+                String strArchivoId = "ArchivoId" + i.ToString();
+                String strArchivoTitulo = "ArchivoTitulo" + i.ToString();
+                String strArchivoFecha = "ArchivoFecha" + i.ToString();
+                String strArchivoLink = "ArchivoLink" + i.ToString();
+                String strArchivoContenidoHtml = "ArchivoContenidoHtml" + i.ToString();
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoId))
+                {
+                    IsolatedStorageSettings.ApplicationSettings.Remove(strArchivoId);
                 }
 
-                RSSList.ItemsSource = RSSData;
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoTitulo))
+                {
+                    IsolatedStorageSettings.ApplicationSettings.Remove(strArchivoTitulo);
+                }
 
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoFecha))
+                {
+                    IsolatedStorageSettings.ApplicationSettings.Remove(strArchivoFecha);
+                }
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoLink))
+                {
+                    IsolatedStorageSettings.ApplicationSettings.Remove(strArchivoLink);
+                }
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoContenidoHtml))
+                {
+                    IsolatedStorageSettings.ApplicationSettings.Remove(strArchivoContenidoHtml);
+                }
             }
-            catch (Exception ex)
+
+            int j = 1;
+            foreach (Models.Feed oFeed in RSSData)
             {
-                MessageBox.Show(ex.Message);
+                String  strArchivoId = "ArchivoId" + j.ToString();
+                String strArchivoTitulo = "ArchivoTitulo" + j.ToString();
+                String strArchivoFecha = "ArchivoFecha" + j.ToString();
+                String strArchivoLink = "ArchivoLink" + j.ToString();
+                String strArchivoContenidoHtml = "ArchivoContenidoHtml" + j.ToString();
+
+                IsolatedStorageSettings.ApplicationSettings[strArchivoId] = oFeed.Id;
+                IsolatedStorageSettings.ApplicationSettings[strArchivoTitulo] = oFeed.Titulo;
+                IsolatedStorageSettings.ApplicationSettings[strArchivoFecha] = oFeed.FechaPublicacion;
+                IsolatedStorageSettings.ApplicationSettings[strArchivoLink] = oFeed.Link;
+                IsolatedStorageSettings.ApplicationSettings[strArchivoContenidoHtml] = oFeed.ContenidoHtml;
+
+                j++;
             }
+        }
+
+
+
+        private List<Models.Feed> leerFeeds()
+        {
+            List<Models.Feed> RSSData = new List<Models.Feed>();
+
+            
+            for (int i = 1;i<=10;i++)
+            {
+                String strArchivoId = "ArchivoId" + i.ToString();
+                String strArchivoTitulo = "ArchivoTitulo" + i.ToString();
+                String strArchivoFecha = "ArchivoFecha" + i.ToString();
+                String strArchivoLink = "ArchivoLink" + i.ToString();
+                String strArchivoContenidoHtml = "ArchivoContenidoHtml" + i.ToString();
+
+                Models.Feed oFeed;
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoId))
+                {
+                    oFeed = new Models.Feed();
+                    oFeed.Id = IsolatedStorageSettings.ApplicationSettings[strArchivoId].ToString();
+                }
+                else
+                {
+                    break;
+                }
+                
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoTitulo))
+                {
+                    oFeed.Titulo = IsolatedStorageSettings.ApplicationSettings[strArchivoTitulo].ToString();
+                }
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoFecha))
+                {
+                    oFeed.FechaPublicacion = IsolatedStorageSettings.ApplicationSettings[strArchivoFecha].ToString();
+                }
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoLink))
+                {
+                    oFeed.Link = IsolatedStorageSettings.ApplicationSettings[strArchivoLink].ToString();
+                }
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains(strArchivoContenidoHtml))
+                {
+                    oFeed.ContenidoHtml = IsolatedStorageSettings.ApplicationSettings[strArchivoContenidoHtml].ToString();
+                }
+
+                RSSData.Add(oFeed);
+            }
+
+            return RSSData;
         }
 
         private void BuildLocalizedApplicationBar()
