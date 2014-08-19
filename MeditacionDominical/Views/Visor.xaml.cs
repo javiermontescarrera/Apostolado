@@ -17,6 +17,7 @@ using MeditacionDominical.Models;
 using System.Text;
 using System.IO.IsolatedStorage;
 using Microsoft.Phone.Net.NetworkInformation;
+using System.Collections.ObjectModel;
 
 namespace MeditacionDominical.Views
 {
@@ -57,10 +58,15 @@ namespace MeditacionDominical.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (RSSList.SelectedItems.Count > 0)
-            {
-                //RSSList.SelectedItems.Clear();
-            }
+            //if (RSSList.SelectedItems.Count > 0)
+            //{
+            //    RSSList.SelectedItems.Clear();
+            //}
+
+            //for (int i = 0; i < RSSList.Items.Count; i++)
+            //{
+            //    RSSList.Items[i] = null;
+            //}
         }
 
 
@@ -83,7 +89,7 @@ namespace MeditacionDominical.Views
                     SyndicationFeed feed = SyndicationFeed.Load(reader);
 
                     List<SyndicationItem> listaFeeds = feed.Items.ToList();
-                    List<Models.Feed> RSSData = new List<Models.Feed>();
+                    ObservableCollection<Models.Feed> RSSData = new ObservableCollection<Models.Feed>();
                     foreach (SyndicationItem si in listaFeeds)
                     {
                         Models.Feed oFeed = new Models.Feed();
@@ -118,7 +124,7 @@ namespace MeditacionDominical.Views
             }
         }
 
-        private void grabarFeeds(List<Models.Feed> RSSData)
+        private void grabarFeeds(ObservableCollection<Models.Feed> RSSData)
         {
             
             for (int i = 1; i <= 10; i++)
@@ -176,9 +182,9 @@ namespace MeditacionDominical.Views
 
 
 
-        private List<Models.Feed> leerFeeds()
+        private ObservableCollection<Models.Feed> leerFeeds()
         {
-            List<Models.Feed> RSSData = new List<Models.Feed>();
+            ObservableCollection<Models.Feed> RSSData = new ObservableCollection<Models.Feed>();
 
             
             for (int i = 1;i<=10;i++)
@@ -255,15 +261,28 @@ namespace MeditacionDominical.Views
             }
         }
 
-        private void RSSList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //private void RSSList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    Models.Feed feedItem = (Models.Feed)e.AddedItems[0];
+        //    leerFeedItem(feedItem);
+        //}
+
+        private void RSSList_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            Models.Feed feedItem = (Models.Feed)e.AddedItems[0];
+            if (RSSList.SelectedItems.Count > 0)
+            {
+                Models.Feed feedItem = (Models.Feed)RSSList.SelectedItems[0];
+                leerFeedItem(feedItem);
+            }
+        }
+
+        private void leerFeedItem(Models.Feed feedItem)
+        {
             common.GuardarClave("Titulo", feedItem.Titulo);
             common.GuardarClave("Contenido", feedItem.ContenidoHtml);
             common.GuardarClave("ContenidoPlano", feedItem.ContenidoPlano);
             common.GuardarClave("link", feedItem.Link.ToString());
             NavigationService.Navigate(uriLector);
         }
-
     }
 }

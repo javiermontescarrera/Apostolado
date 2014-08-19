@@ -17,9 +17,9 @@
         <mo:RssTextTrimmer x:Key="RssTextTrimmer" />
         <DataTemplate x:Key="RssDataTemplate">
             <StackPanel>
-                <TextBlock Text="{Binding Path=Title.Text}" Style="{StaticResource PhoneTextNormalStyle}" FontSize="29" FontWeight="Bold" ></TextBlock>
-                <TextBlock Text="{Binding Path=PublishDate}" Foreground="#FF3981FD" ></TextBlock>
-                <TextBlock Text="{Binding Path=Content.Text, Converter={StaticResource RssTextTrimmer}}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" ></TextBlock>
+                <TextBlock Text="{Binding Path=Titulo}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" FontSize="27" FontWeight="Bold" TextWrapping="Wrap"  ></TextBlock>
+                <TextBlock Text="{Binding Path=FechaPublicacion}" Foreground="#FF3981FD" ></TextBlock>
+                <TextBlock Text="{Binding Path=ContenidoPlano, Converter={StaticResource RssTextTrimmer}}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" TextWrapping="Wrap" ></TextBlock>
             </StackPanel>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
@@ -38,8 +38,12 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <!--<phone:LongListSelector Name="RSSList" ItemTemplate="{Binding RssDataTemplate}" SelectionChanged="RSSList_SelectionChanged" />-->
-            <ListBox Name="RSSList" SelectionChanged="RSSList_SelectionChanged" SelectionMode="Single">
+            <!--<phone:LongListSelector Name="RSSList" 
+                                    ItemTemplate="{Binding RssDataTemplate}" 
+                                    SelectionChanged="RSSList_SelectionChanged" 
+                                    Background="White" 
+                                    Foreground="Black" />-->
+            <ListBox Name="RSSList" Tap="RSSList_Tap" SelectionMode="Single">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>

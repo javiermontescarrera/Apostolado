@@ -1,5 +1,4 @@
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Assets\ApplicationIcon.png
-D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Assets\Tiles\FlipCycleTileLarge.png
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Assets\Tiles\FlipCycleTileMedium.png
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Assets\Tiles\FlipCycleTileSmall.png
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Assets\Tiles\IconicTileMediumLarge.png
@@ -31,7 +30,6 @@ D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\ko\System.Service
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\ru\System.ServiceModel.Syndication.resources.dll
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\zh-Hans\System.ServiceModel.Syndication.resources.dll
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\zh-Hant\System.ServiceModel.Syndication.resources.dll
-D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.csprojResolveAssemblyReference.cache
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\App.g.cs
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\Views\Config.g.cs
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\Views\Lector.g.cs
@@ -44,3 +42,4 @@ D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\es-PE\MeditacionD
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.dll
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.pdb
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\XapCacheFile.xml
+D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.csprojResolveAssemblyReference.cache

@@ -12,7 +12,7 @@ using Windows.Phone.Speech.Recognition;
 using Windows.Phone.Speech.Synthesis;
 using MeditacionDominical.Resources;
 using MeditacionDominical.Models;
-//using HtmlAgilityPack;
+using Microsoft.Phone.BackgroundAudio;
 
 namespace MeditacionDominical.Views
 {
@@ -71,6 +71,8 @@ namespace MeditacionDominical.Views
             {
                 ss = new SpeechSynthesizer();
 
+                //grabarAudio();
+
                 //Find the voice of your choice. In this case french woman
                 var voice = (from x in InstalledVoices.All
                              where x.Language == "es-ES" &&
@@ -81,6 +83,22 @@ namespace MeditacionDominical.Views
                 ss.SpeakTextAsync(strTextoALeer);
             }
         }
+
+        //private void grabarAudio()
+        //{ 
+        //    sfd.Filter = ""wav files (*.wav)|*.wav";
+        //    sfd.Title = "Save to a wave file";
+        //    sfd.FilterIndex = 2;
+        //    sfd.RestoreDirectory = true;
+
+        //    if (ss.ShowDialog() == DialogResult.OK)
+        //    {
+        //         FileStream fs = new FileStream(sfd.FileName,FileMode.Create,FileAccess.Write);
+        //         ss.SetOutputToWaveStream(fs);
+        //         ss.Speak(richTextBox1.Text);
+        //         fs.Close();
+        //    }
+        //}
 
         private void appPronunciarButton_Click(object sender, EventArgs e)
         {
