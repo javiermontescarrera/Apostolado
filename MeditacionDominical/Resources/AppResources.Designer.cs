@@ -10,6 +10,7 @@
 
 namespace MeditacionDominical.Resources {
     using System;
+    using Windows.Phone.Speech.Synthesis;
     
     
     /// <summary>
@@ -23,7 +24,9 @@ namespace MeditacionDominical.Resources {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class AppResources {
-        
+
+        public static SpeechSynthesizer ss = new SpeechSynthesizer();
+
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;

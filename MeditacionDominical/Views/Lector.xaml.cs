@@ -8,17 +8,19 @@ using System.Windows.Documents;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Windows.Phone.Speech.Recognition;
+//using Windows.Phone.Speech.Recognition;
 using Windows.Phone.Speech.Synthesis;
 using MeditacionDominical.Resources;
 using MeditacionDominical.Models;
-using Microsoft.Phone.BackgroundAudio;
+//using Microsoft.Phone.BackgroundAudio;
 
 namespace MeditacionDominical.Views
 {
     public partial class Lector : PhoneApplicationPage
     {
-        SpeechSynthesizer ss;
+        //SpeechSynthesizer ss;
+
+        //private DisplayRequest dispRequest = null;
 
         private Common common = new Common();
         String strTextoALeer;
@@ -69,9 +71,7 @@ namespace MeditacionDominical.Views
         {
             if (strTextoALeer.Trim() != String.Empty)
             {
-                ss = new SpeechSynthesizer();
-
-                //grabarAudio();
+                AppResources.ss.CancelAll();
 
                 //Find the voice of your choice. In this case french woman
                 var voice = (from x in InstalledVoices.All
@@ -79,26 +79,21 @@ namespace MeditacionDominical.Views
                              x.Gender == VoiceGender.Female
                              select x).FirstOrDefault();
 
-                ss.SetVoice(voice);
-                ss.SpeakTextAsync(strTextoALeer);
+                try
+                { 
+                    AppResources.ss.SetVoice(voice);
+                    AppResources.ss.SpeakSsmlAsync(strTextoALeer);
+                    //AppResources.ss.SpeakSsmlAsync("<?xml version=""1.0""?> <speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd"" xml:lang=""en-US"">" + strTextoALeer + "<mark name=""fin""/></speak>");
+
+                    // Con el siguiente comando prevenimos que la pantalla del telefono se apague y se deje de leer el texto...
+                    PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
-
-        //private void grabarAudio()
-        //{ 
-        //    sfd.Filter = ""wav files (*.wav)|*.wav";
-        //    sfd.Title = "Save to a wave file";
-        //    sfd.FilterIndex = 2;
-        //    sfd.RestoreDirectory = true;
-
-        //    if (ss.ShowDialog() == DialogResult.OK)
-        //    {
-        //         FileStream fs = new FileStream(sfd.FileName,FileMode.Create,FileAccess.Write);
-        //         ss.SetOutputToWaveStream(fs);
-        //         ss.Speak(richTextBox1.Text);
-        //         fs.Close();
-        //    }
-        //}
 
         private void appPronunciarButton_Click(object sender, EventArgs e)
         {
@@ -118,17 +113,15 @@ namespace MeditacionDominical.Views
         {
             try
             {
-                if (ss != null)
-                {
-                    ss.CancelAll();
-                    ss = null;
-                }
-
+                AppResources.ss.CancelAll();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
+            PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
+
         }
     }
 }

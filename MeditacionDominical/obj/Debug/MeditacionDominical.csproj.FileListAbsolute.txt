@@ -18,7 +18,6 @@ D:\Javier\Proyectos\MeditacionDominical\MeditacionDominical\obj\Debug\Meditacion
 D:\Javier\Proyectos\MeditacionDominical\MeditacionDominical\obj\Debug\MeditacionDominical.pdb
 D:\Javier\Proyectos\MeditacionDominical\MeditacionDominical\obj\Debug\XapCacheFile.xml
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Assets\ApplicationIcon.png
-D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Assets\Tiles\FlipCycleTileLarge.png
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Assets\Tiles\FlipCycleTileSmall.png
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Debug\Assets\Tiles\IconicTileMediumLarge.png

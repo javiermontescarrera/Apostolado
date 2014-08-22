@@ -67,6 +67,7 @@ namespace MeditacionDominical.Views
             //{
             //    RSSList.Items[i] = null;
             //}
+            //PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
         }
 
 
