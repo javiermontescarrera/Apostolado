@@ -35,12 +35,19 @@ namespace MeditacionDominical.Views
                 tblTitulo.Text = common.LeerClave("Titulo");
                 strTextoALeer = tblNombreAplicacion.Text + "\n" + tblTitulo.Text + "\n" + common.LeerClave("ContenidoPlano");
                 wbContenido.NavigateToString(common.LeerClave("Contenido"));
+                AppResources.ss.BookmarkReached += new Windows.Foundation.TypedEventHandler<SpeechSynthesizer,SpeechBookmarkReachedEventArgs>(synth_BookmarkReached);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+        static void synth_BookmarkReached(object sender, SpeechBookmarkReachedEventArgs e)
+        {
+            PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
+        } 
+
 
         private void setearTamanioTexto()
         {
@@ -82,8 +89,14 @@ namespace MeditacionDominical.Views
                 try
                 { 
                     AppResources.ss.SetVoice(voice);
-                    AppResources.ss.SpeakSsmlAsync(strTextoALeer);
-                    //AppResources.ss.SpeakSsmlAsync("<?xml version=""1.0""?> <speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.w3.org/2001/10/synthesis http://www.w3.org/TR/speech-synthesis/synthesis.xsd"" xml:lang=""en-US"">" + strTextoALeer + "<mark name=""fin""/></speak>");
+                    //AppResources.ss.SpeakSsmlAsync(strTextoALeer);
+
+                    string ssmlText = "<speak version=\"1.0\" ";
+                    ssmlText += "xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"es-ES\">";
+                    ssmlText += strTextoALeer;
+                    ssmlText += "<mark name=\"fin\"/></speak>";
+
+                    AppResources.ss.SpeakSsmlAsync(ssmlText);
 
                     // Con el siguiente comando prevenimos que la pantalla del telefono se apague y se deje de leer el texto...
                     PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
