@@ -143,6 +143,7 @@
     <Content Include="Assets\microphone.png" />
     <Content Include="Assets\refresh.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png" />
+    <Content Include="Assets\Tiles\FlipCycleTileLarge_old.png" />
     <Content Include="Assets\Tiles\FlipCycleTileMedium.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
