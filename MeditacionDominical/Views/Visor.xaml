@@ -12,11 +12,12 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     xmlns:mo="clr-namespace:MeditacionDominical.Models"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    Loaded="PhoneApplicationPage_Loaded">
     <phone:PhoneApplicationPage.Resources>
         <mo:RssTextTrimmer x:Key="RssTextTrimmer" />
         <DataTemplate x:Key="RssDataTemplate">
-            <StackPanel>
+            <StackPanel>    
                 <TextBlock Text="{Binding Path=Titulo}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" FontSize="27" FontWeight="Bold" TextWrapping="Wrap"  ></TextBlock>
                 <TextBlock Text="{Binding Path=FechaPublicacion}" Foreground="#FF3981FD" ></TextBlock>
                 <TextBlock Text="{Binding Path=ContenidoPlano, Converter={StaticResource RssTextTrimmer}}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" TextWrapping="Wrap" ></TextBlock>

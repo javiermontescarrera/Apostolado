@@ -62,7 +62,7 @@ namespace MeditacionDominical.Models
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
             return rpta;
         }

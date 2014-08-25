@@ -1,6 +1,6 @@
-﻿<xapCache source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\MeditacionDominical_Release_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="23/08/2014 05:10:32 p.m.">
-  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.dll" archivePath="MeditacionDominical.dll" lastWriteTime="23/08/2014 05:10:30 p.m." />
-  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\es-PE\MeditacionDominical.resources.dll" archivePath="es-PE\MeditacionDominical.resources.dll" lastWriteTime="23/08/2014 05:10:30 p.m." />
+﻿<xapCache source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\MeditacionDominical_Release_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="24/08/2014 06:14:31 p.m.">
+  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.dll" archivePath="MeditacionDominical.dll" lastWriteTime="24/08/2014 06:14:20 p.m." />
+  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\es-PE\MeditacionDominical.resources.dll" archivePath="es-PE\MeditacionDominical.resources.dll" lastWriteTime="24/08/2014 06:14:22 p.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="17/05/2014 04:24:32 p.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Assets\ApplicationIcon.png" archivePath="Assets\ApplicationIcon.png" lastWriteTime="17/05/2014 04:24:32 p.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Assets\cancel.png" archivePath="Assets\cancel.png" lastWriteTime="03/03/2013 07:40:36 p.m." />
@@ -15,7 +15,7 @@
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Toolkit.Content\ApplicationBar.Check.png" archivePath="Toolkit.Content\ApplicationBar.Check.png" lastWriteTime="30/07/2014 01:16:14 a.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Toolkit.Content\ApplicationBar.Delete.png" archivePath="Toolkit.Content\ApplicationBar.Delete.png" lastWriteTime="30/07/2014 01:16:14 a.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Toolkit.Content\ApplicationBar.Select.png" archivePath="Toolkit.Content\ApplicationBar.Select.png" lastWriteTime="30/07/2014 01:16:14 a.m." />
-  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="13/08/2014 12:12:24 a.m." />
+  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="24/08/2014 06:14:31 p.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Assets\Tiles\FlipCycleTileMedium.png" archivePath="Assets\Tiles\FlipCycleTileMedium.png" lastWriteTime="23/08/2014 04:49:54 p.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\packages\HtmlAgilityPack.1.4.6\lib\sl4-windowsphone71\HtmlAgilityPack.dll" archivePath="HtmlAgilityPack.dll" lastWriteTime="06/08/2014 10:23:24 p.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.dll" archivePath="System.Net.Http.dll" lastWriteTime="25/05/2014 06:52:27 p.m." />
@@ -28,5 +28,5 @@
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.Extensions.xml" archivePath="System.Net.Http.Extensions.xml" lastWriteTime="25/05/2014 06:52:27 p.m." />
   <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.Primitives.xml" archivePath="System.Net.Http.Primitives.xml" lastWriteTime="25/05/2014 06:52:27 p.m." />
   <file source="C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ServiceModel.Syndication.xml" archivePath="System.ServiceModel.Syndication.xml" lastWriteTime="26/02/2010 01:01:10 a.m." />
-  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="23/08/2014 05:08:21 p.m." />
+  <file source="D:\Javier\Proyectos\Apostolado\MeditacionDominical\Bin\Release\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="24/08/2014 06:14:31 p.m." />
 </xapCache>

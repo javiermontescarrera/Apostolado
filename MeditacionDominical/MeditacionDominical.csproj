@@ -93,6 +93,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Models\BackgroundWorkerExtensions.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\ContenidoLectura.cs" />
     <Compile Include="Models\ElementoIndice.cs" />

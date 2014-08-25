@@ -13,6 +13,8 @@ using Windows.Phone.Speech.Synthesis;
 using MeditacionDominical.Resources;
 using MeditacionDominical.Models;
 //using Microsoft.Phone.BackgroundAudio;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace MeditacionDominical.Views
 {
@@ -27,20 +29,7 @@ namespace MeditacionDominical.Views
 
         public Lector()
         {
-            InitializeComponent();
-            try
-            {
-                BuildLocalizedApplicationBar();
-                setearTamanioTexto();
-                tblTitulo.Text = common.LeerClave("Titulo");
-                strTextoALeer = tblNombreAplicacion.Text + "\n" + tblTitulo.Text + "\n" + common.LeerClave("ContenidoPlano");
-                wbContenido.NavigateToString(common.LeerClave("Contenido"));
-                AppResources.ss.BookmarkReached += new Windows.Foundation.TypedEventHandler<SpeechSynthesizer,SpeechBookmarkReachedEventArgs>(synth_BookmarkReached);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            InitializeComponent();   
         }
 
         static void synth_BookmarkReached(object sender, SpeechBookmarkReachedEventArgs e)
@@ -91,15 +80,14 @@ namespace MeditacionDominical.Views
                     AppResources.ss.SetVoice(voice);
                     //AppResources.ss.SpeakSsmlAsync(strTextoALeer);
 
-                    string ssmlText = "<speak version=\"1.0\" ";
-                    ssmlText += "xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"es-ES\">";
-                    ssmlText += strTextoALeer;
-                    ssmlText += "<mark name=\"fin\"/></speak>";
-
-                    AppResources.ss.SpeakSsmlAsync(ssmlText);
-
                     // Con el siguiente comando prevenimos que la pantalla del telefono se apague y se deje de leer el texto...
                     PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+
+                    BackgroundWorker worker = new BackgroundWorker();
+                    worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+                    worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+                    worker.RunWorkerAsync();
+
                 }
                 catch (Exception ex)
                 {
@@ -108,12 +96,31 @@ namespace MeditacionDominical.Views
             }
         }
 
+        async void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+
+            string ssmlText = "<speak version=\"1.0\" ";
+            ssmlText += "xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"es-ES\">";
+            ssmlText += strTextoALeer;
+            ssmlText += "<mark name=\"fin\"/></speak>"; 
+            AppResources.ss.SpeakSsmlAsync(ssmlText);
+
+            await worker.RunWorkerTaskAsync();
+        }
+
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            worker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            worker.DoWork -= new DoWorkEventHandler(worker_DoWork);
+        }
+
         private void appPronunciarButton_Click(object sender, EventArgs e)
         {
             try
             {
                 PronunciarTexto();
-
             }
             catch (Exception ex)
             {
@@ -135,6 +142,31 @@ namespace MeditacionDominical.Views
 
             PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
 
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ProgressIndicator prog = new ProgressIndicator();
+            prog.IsVisible = true;
+            prog.IsIndeterminate = true;
+            prog.Text = String.Empty;
+            SystemTray.SetProgressIndicator(this, prog);
+
+            try
+            {
+                BuildLocalizedApplicationBar();
+                setearTamanioTexto();
+                tblTitulo.Text = common.LeerClave("Titulo");
+                strTextoALeer = tblNombreAplicacion.Text + "\n" + tblTitulo.Text + "\n" + common.LeerClave("ContenidoPlano");
+                wbContenido.NavigateToString(common.LeerClave("Contenido"));
+                AppResources.ss.BookmarkReached += new Windows.Foundation.TypedEventHandler<SpeechSynthesizer, SpeechBookmarkReachedEventArgs>(synth_BookmarkReached);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            SystemTray.ProgressIndicator.IsVisible = false;
         }
     }
 }

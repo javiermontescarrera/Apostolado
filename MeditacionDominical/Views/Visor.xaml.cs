@@ -31,24 +31,35 @@ namespace MeditacionDominical.Views
         {
             InitializeComponent();
 
-            try
-            {
-                BuildLocalizedApplicationBar();
-                if (verificarConexion())
-                {
-                    CargarFeeds();
-                }
-                else
-                {
-                    RSSList.ItemsSource = leerFeeds();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    BuildLocalizedApplicationBar();
+            //    ListarFeeds();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
+        private void ListarFeeds()
+        {
+            ProgressIndicator prog = new ProgressIndicator();
+            prog.IsVisible = true;
+            prog.IsIndeterminate = true;
+            prog.Text = "Obteniendo Lecturas...";
+            SystemTray.SetProgressIndicator(this, prog);
+
+            if (verificarConexion())
+            {
+                CargarFeeds();
+            }
+            else
+            {   
+                RSSList.ItemsSource = leerFeeds();
+            }
+        }
+        
         private bool verificarConexion()
         {
             bool Rpta = NetworkInterface.GetIsNetworkAvailable();
@@ -58,15 +69,6 @@ namespace MeditacionDominical.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //if (RSSList.SelectedItems.Count > 0)
-            //{
-            //    RSSList.SelectedItems.Clear();
-            //}
-
-            //for (int i = 0; i < RSSList.Items.Count; i++)
-            //{
-            //    RSSList.Items[i] = null;
-            //}
             PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
         }
 
@@ -118,6 +120,7 @@ namespace MeditacionDominical.Views
                 {
                     MessageBox.Show(ex.Message);
                 }
+                SystemTray.ProgressIndicator.IsVisible = false;
             }
             catch (System.Reflection.TargetInvocationException tiEx)
             {
@@ -230,6 +233,7 @@ namespace MeditacionDominical.Views
 
                 RSSData.Add(oFeed);
             }
+            SystemTray.ProgressIndicator.IsVisible = false;
 
             return RSSData;
         }
@@ -252,21 +256,14 @@ namespace MeditacionDominical.Views
             {
                 //ViewModels.TraduccionVM ciudadViewModel = (App.Current.Resources["traduccionVM"] as ViewModels.TraduccionVM);
 
-                //ciudadViewModel.TraducirCommand.Execute(null);
-
-                CargarFeeds();
+                //CargarFeeds();
+                ListarFeeds();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
-
-        //private void RSSList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    Models.Feed feedItem = (Models.Feed)e.AddedItems[0];
-        //    leerFeedItem(feedItem);
-        //}
 
         private void RSSList_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
@@ -284,6 +281,19 @@ namespace MeditacionDominical.Views
             common.GuardarClave("ContenidoPlano", feedItem.ContenidoPlano);
             common.GuardarClave("link", feedItem.Link.ToString());
             NavigationService.Navigate(uriLector);
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BuildLocalizedApplicationBar();
+                ListarFeeds();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
