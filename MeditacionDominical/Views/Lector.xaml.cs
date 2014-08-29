@@ -35,15 +35,52 @@ namespace MeditacionDominical.Views
         static void synth_BookmarkReached(object sender, SpeechBookmarkReachedEventArgs e)
         {
             PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
-        } 
+        }
 
+
+        private void PhoneApplicationPage_OrientationChanged(object sender, OrientationChangedEventArgs e)
+        {
+            double ScreenWidth;
+            double ScreenHeight;
+            double AnchoContenido;
+
+            // Switch the placement of the buttons based on an orientation change.
+            if ((e.Orientation & PageOrientation.Portrait) == (PageOrientation.Portrait))
+            {
+                ScreenWidth = Application.Current.Host.Content.ActualWidth;
+                ScreenHeight = Application.Current.Host.Content.ActualHeight;
+
+                AnchoContenido = ScreenWidth - 50;
+            }
+            // If not in portrait, move buttonList content to visible row and column.
+            else
+            {
+                ScreenHeight = Application.Current.Host.Content.ActualWidth;
+                ScreenWidth = Application.Current.Host.Content.ActualHeight;
+
+                AnchoContenido = ScreenWidth - 147;
+            }
+
+            wbContenido.Width = AnchoContenido;
+
+            stpContenido.Height = ScreenHeight - 20;
+            stpContenido.Width = ScreenWidth - 20;
+
+        }
 
         private void setearTamanioTexto()
         {
             double ScreenWidth = Application.Current.Host.Content.ActualWidth;
             double ScreenHeight = Application.Current.Host.Content.ActualHeight;
-            scrContenido.Height = ScreenHeight - 193;
+
+            //scrContenido.Height = ScreenHeight - 193;
+            //wbContenido.Width = ScreenWidth - 50;
+
+            wbContenido.Height = ScreenHeight - 193;
             wbContenido.Width = ScreenWidth - 50;
+
+            stpContenido.Height = ScreenHeight - 20;
+            stpContenido.Width = ScreenWidth - 20;
         }
 
         private void BuildLocalizedApplicationBar()

@@ -9,7 +9,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
     mc:Ignorable="d"
     xmlns:mo="clr-namespace:MeditacionDominical.Models"
     shell:SystemTray.IsVisible="True"
@@ -30,9 +30,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Name="stpCabecera" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="Rafael de la Piedra" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" />
             <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="Black" FontSize="45" FontWeight="Bold"/>
         </StackPanel>
@@ -44,10 +44,10 @@
                                     SelectionChanged="RSSList_SelectionChanged" 
                                     Background="White" 
                                     Foreground="Black" />-->
-            <ListBox Name="RSSList" Tap="RSSList_Tap" SelectionMode="Single">
+            <ListBox Name="RSSList" Tap="RSSList_Tap" SelectionMode="Single" HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <StackPanel HorizontalAlignment="Stretch">
                             <TextBlock Text="{Binding Path=Titulo}" Style="{StaticResource PhoneTextNormalStyle}"  Foreground="Black" FontSize="27" FontWeight="Bold" TextWrapping="Wrap" ></TextBlock>
                             <TextBlock Text="{Binding Path=FechaPublicacion}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="#FF3981FD" ></TextBlock>
                             <TextBlock Text="{Binding Path=ContenidoPlano, Converter={StaticResource RssTextTrimmer}}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" TextWrapping="Wrap" ></TextBlock>

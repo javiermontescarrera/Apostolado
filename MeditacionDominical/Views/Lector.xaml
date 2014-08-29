@@ -9,10 +9,11 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
-    Loaded="PhoneApplicationPage_Loaded">
+    Loaded="PhoneApplicationPage_Loaded"
+    OrientationChanged="PhoneApplicationPage_OrientationChanged">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="White">
@@ -22,12 +23,12 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Name="stpContenido" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Name="tblNombreAplicacion" Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" FontWeight="Bold"/>
             <TextBlock Name="tblTitulo" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" Foreground="Black" FontWeight="Bold"/>
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ScrollViewer Name="scrContenido" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Bottom" VerticalScrollBarVisibility="Auto" Height="607">
-                    <phone:WebBrowser Name="wbContenido" />
+                    <phone:WebBrowser Name="wbContenido" HorizontalContentAlignment="Stretch" />
                 </ScrollViewer>
             </Grid>
         </StackPanel>

@@ -42,3 +42,4 @@ D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\es-PE\MeditacionD
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.dll
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.pdb
 D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\XapCacheFile.xml
+D:\Javier\Proyectos\Apostolado\MeditacionDominical\obj\Release\MeditacionDominical.csprojResolveAssemblyReference.cache
